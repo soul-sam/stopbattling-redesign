@@ -17,6 +17,7 @@ Same words, same links, same prices, same palette and fonts. Only the presentati
 - "Support my work" has a soft ember glow (brighter when hovering a way to pay)
 - "Four acts. You're in one." — tap an act, it shows your own words from the long page
 - Long page: reading progress bar, clickable outsourcing wheel, "I'm here" on the four acts
+- On phones the hero keeps the original layout: portrait floated left, words wrapping around it, compact above the fold
 - Everything respects `prefers-reduced-motion`; everything works on phones
 
 ## Two things to wire before going live

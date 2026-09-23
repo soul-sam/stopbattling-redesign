@@ -171,15 +171,12 @@ button, input { font: inherit; }
   animation: breathe-b 14s var(--ease-breath) infinite;
 }
 .hero .inner {
+  /* phones: the portrait floats left and the words wrap around it — compact, above the fold */
   position: relative; z-index: 1;
   max-width: 1080px; margin: 0 auto;
-  padding: 34px var(--gutter) 40px;
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-items: center;
-  text-align: center;
-  gap: 22px;
+  padding: 22px var(--gutter) 26px;
 }
+.hero .inner::after { content: ""; display: block; clear: both; }
 .hero .light.c {
   /* follows the pointer on desktop — a lamp you carry */
   width: 420px; height: 420px; left: var(--px, 50%); top: var(--py, 50%);
@@ -190,7 +187,8 @@ button, input { font: inherit; }
 .hero:hover .light.c { opacity: 1; }
 .portrait {
   position: relative;
-  width: 140px; height: 140px; flex: none;
+  float: left; margin: 2px 16px 4px 0;
+  width: 104px; height: 104px; flex: none;
   transform-style: preserve-3d;
   transition: transform 0.6s var(--ease-out);
   will-change: transform;
@@ -217,13 +215,12 @@ button, input { font: inherit; }
   animation: rise 0.9s var(--ease-out) 0.5s forwards;
 }
 .hero h1 {
-  margin: 12px auto 0;
+  margin: 6px 0 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(34px, 8.5vw, 64px);
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-  max-width: 12ch;
+  font-size: clamp(30px, 8vw, 64px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
 }
 .hero h1 .w {
   display: inline-block;
@@ -231,10 +228,10 @@ button, input { font: inherit; }
   animation: word 1s var(--ease-out) forwards;
 }
 .hero h1 em { font-style: italic; color: #e8dcb0; }
-.hero .text { display: flex; flex-direction: column; align-items: center; }
+.hero .text { display: block; }
 .hero .cue {
   display: inline-flex; align-items: center; gap: 10px;
-  margin-top: 26px;
+  clear: both; margin-top: 18px;
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--sage-text);
   text-decoration: none;
@@ -248,17 +245,16 @@ button, input { font: inherit; }
 
 @media (min-width: 720px) {
   .hero .inner {
+    display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
-    justify-items: start;
-    text-align: left;
     gap: 40px;
     padding: 48px var(--gutter) 56px;
   }
-  .hero .text { align-items: flex-start; }
-  .hero h1 { margin-left: 0; }
-  .portrait { width: 200px; height: 200px; }
-  .hero h1 { margin-top: 14px; }
+  .hero .inner::after { display: none; }
+  .portrait { float: none; margin: 0; width: 200px; height: 200px; }
+  .hero h1 { margin-top: 14px; max-width: 12ch; line-height: 1.04; letter-spacing: -0.025em; }
+  .hero .cue { margin-top: 28px; }
 }
 @media (min-width: 1000px) {
   .hero .inner { padding: 64px var(--gutter) 72px; gap: 56px; }
