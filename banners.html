@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Banners — stopbattling.com</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ------------------------------------------------------------
+       Artboards. Each .board is laid out with a base unit (--u) so the
+       same design scales to 1200×630, 1080×1080 and 1080×1920.
+       ------------------------------------------------------------ */
+    body { background: #2a2a26; }
+    body.single { background: transparent; overflow: hidden; }
+    .board {
+      position: relative; overflow: hidden; isolation: isolate;
+      width: var(--w); height: var(--h);
+      --u: calc(var(--w) / 100);
+      font-family: var(--font-serif);
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: calc(var(--u) * 7);
+      box-sizing: border-box;
+    }
+    .board.story { --u: calc(var(--w) / 84); padding: calc(var(--u) * 7) calc(var(--u) * 6); }
+    .board.square { --u: calc(var(--w) / 92); }
+
+    .brand-sm { font-family: var(--font-display); font-style: italic; font-size: calc(var(--u) * 3.6); line-height: 1; letter-spacing: -0.01em; }
+    .brand-sm i { font-style: italic; color: var(--clay); }
+    .kick { font-family: var(--font-mono); font-size: calc(var(--u) * 1.5); letter-spacing: 0.18em; text-transform: uppercase; }
+    .big { font-family: var(--font-display); font-weight: 400; line-height: 1.02; letter-spacing: -0.025em; margin: 0; }
+    .sub { font-size: calc(var(--u) * 2.4); line-height: 1.45; margin: calc(var(--u) * 2.4) 0 0; max-width: 34ch; }
+    .url { font-family: var(--font-mono); font-size: calc(var(--u) * 1.6); letter-spacing: 0.1em; }
+    .dots { display: flex; gap: calc(var(--u) * 1.2); margin-bottom: calc(var(--u) * 2.4); }
+    .dots i { width: calc(var(--u) * 1.5); height: calc(var(--u) * 1.5); border-radius: 50%; background: currentColor; opacity: 0.8; }
+    .dots i:last-child { opacity: 1; box-shadow: 0 0 0 calc(var(--u) * 0.6) rgba(217, 164, 65, 0.35); background: var(--ember); }
+    .glow { position: absolute; border-radius: 50%; filter: blur(calc(var(--u) * 8)); pointer-events: none; z-index: -1; }
+    .row { display: flex; justify-content: space-between; align-items: flex-end; gap: calc(var(--u) * 3); }
+    .row:first-child { padding-bottom: calc(var(--u) * 3); }
+    .row:last-child { padding-top: calc(var(--u) * 3); }
+    .w { position: relative; display: inline-block; }
+    .w svg { position: absolute; left: -4%; width: 108%; overflow: visible; }
+    .w svg path { fill: none; stroke-linecap: round; }
+    .w.strike svg { top: 58%; height: 0.08em; }
+    .w.strike svg path { stroke: var(--clay); stroke-width: 2.4; }
+    .w.under svg { bottom: -0.06em; height: 0.08em; }
+    .w.under svg path { stroke: var(--clay); stroke-width: 2.6; }
+    .portrait-b { border-radius: 50%; object-fit: cover; object-position: 50% 18%; border: calc(var(--u) * 0.4) solid rgba(245, 241, 232, 0.35); box-shadow: 0 0 0 calc(var(--u) * 1.6) rgba(245, 241, 232, 0.12); }
+
+    /* --- seven-a: forest --- */
+    .b-seven-a { background: var(--forest); color: var(--cream); }
+    .b-seven-a .glow.a { width: 70%; height: 70%; left: -20%; top: -30%; background: radial-gradient(circle, rgba(203,211,185,.35), transparent 65%); }
+    .b-seven-a .glow.b { width: 60%; height: 60%; right: -20%; bottom: -30%; background: radial-gradient(circle, rgba(217,164,65,.28), transparent 65%); }
+    .b-seven-a .big { font-size: calc(var(--u) * 9.5); max-width: 9ch; }
+    .b-seven-a .big em { font-style: italic; color: #e8dcb0; }
+    .b-seven-a .sub, .b-seven-a .kick, .b-seven-a .url { color: var(--sage-text); }
+
+    /* --- seven-b: cream --- */
+    .b-seven-b { background: var(--cream); color: var(--ink); }
+    .b-seven-b .big { font-size: calc(var(--u) * 10); max-width: 9ch; }
+    .b-seven-b .sub { color: var(--body-ink); }
+    .b-seven-b .kick, .b-seven-b .url { color: var(--hush); }
+    .b-seven-b .dots i { background: var(--forest); }
+    .b-seven-b .edge { position: absolute; left: 0; top: 0; bottom: 0; width: calc(var(--u) * 1.4); background: var(--forest); }
+    .b-seven-b .board-in { padding-left: calc(var(--u) * 2); }
+
+    /* --- seven-c: clay --- */
+    .b-seven-c { background: var(--clay); color: var(--cream); }
+    .b-seven-c .glow.a { width: 80%; height: 80%; right: -30%; top: -40%; background: radial-gradient(circle, rgba(247,234,201,.35), transparent 65%); }
+    .b-seven-c .big { font-size: calc(var(--u) * 9); max-width: 10ch; }
+    .b-seven-c .big em { font-style: italic; color: var(--gold); }
+    .b-seven-c .sub { color: rgba(245,241,232,.88); }
+    .b-seven-c .kick, .b-seven-c .url { color: rgba(245,241,232,.75); }
+    .b-seven-c .dots i { background: var(--cream); }
+    .b-seven-c .dots i:last-child { background: var(--gold); box-shadow: 0 0 0 calc(var(--u) * 0.6) rgba(247,234,201,.3); }
+
+    /* --- school-a: forest ember --- */
+    .b-school-a { background: var(--forest-deep); color: var(--cream); }
+    .b-school-a .glow.b { width: 90%; height: 90%; right: -35%; bottom: -45%; background: radial-gradient(circle, rgba(217,164,65,.42), transparent 62%); }
+    .b-school-a .big { font-size: calc(var(--u) * 8.6); }
+    .b-school-a .big .l1 { display: block; color: var(--sage-text); }
+    .b-school-a .big .l2 { display: block; }
+    .b-school-a .big .l2 em { font-style: italic; color: #e8dcb0; }
+    .b-school-a .sub { color: var(--sage-text); }
+    .b-school-a .kick { color: #e8dcb0; }
+    .b-school-a .url { color: var(--sage-text); }
+
+    /* --- school-b: cream, big italic --- */
+    .b-school-b { background: var(--cream); color: var(--forest); }
+    .b-school-b .big { font-size: calc(var(--u) * 11.5); font-style: italic; max-width: 9ch; }
+    .b-school-b .big .dot { color: var(--clay); font-style: normal; }
+    .b-school-b .sub { color: var(--muted-ink); }
+    .b-school-b .kick, .b-school-b .url { color: var(--hush); }
+    .b-school-b .rule { width: calc(var(--u) * 10); height: 2px; background: var(--clay); margin-bottom: calc(var(--u) * 2.6); }
+
+    /* --- school-c: portrait --- */
+    .b-school-c { background: var(--forest); color: var(--cream); }
+    .b-school-c .glow.a { width: 70%; height: 70%; left: -25%; top: -30%; background: radial-gradient(circle, rgba(203,211,185,.3), transparent 65%); }
+    .b-school-c .glow.b { width: 60%; height: 60%; right: -20%; bottom: -25%; background: radial-gradient(circle, rgba(217,164,65,.25), transparent 65%); }
+    .b-school-c .who { display: flex; align-items: center; gap: calc(var(--u) * 4); }
+    .b-school-c .portrait-b { width: calc(var(--u) * 22); height: calc(var(--u) * 22); flex: none; }
+    .b-school-c .big { font-size: calc(var(--u) * 8.4); }
+    .b-school-c .big em { font-style: italic; color: #e8dcb0; }
+    .b-school-c .sub, .b-school-c .url { color: var(--sage-text); }
+    .b-school-c .kick { color: #e8dcb0; }
+    .b-school-c.story .who { flex-direction: column; align-items: flex-start; gap: calc(var(--u) * 5); }
+    .b-school-c.story .portrait-b { width: calc(var(--u) * 34); height: calc(var(--u) * 34); }
+    .b-school-c.square .portrait-b { width: calc(var(--u) * 26); height: calc(var(--u) * 26); }
+
+    /* story + square tweaks: more vertical room, bigger type */
+    .board.story .big { font-size: calc(var(--u) * 10.5); }
+    .board.story .sub { font-size: calc(var(--u) * 2.9); max-width: 26ch; }
+    .board.story.b-school-b .big { font-size: calc(var(--u) * 12.5); }
+    .board.square .sub { max-width: 30ch; }
+
+    /* ------------------------------------------------------------
+       Gallery (no query string): every board, scaled to fit
+       ------------------------------------------------------------ */
+    .gallery { max-width: 1200px; margin: 0 auto; padding: 32px 20px 80px; color: var(--cream); }
+    .gallery h1 { font-family: var(--font-display); font-weight: 400; font-size: 34px; margin: 0; }
+    .gallery p { color: var(--sage-text); max-width: 60ch; }
+    .gallery a { color: #e8dcb0; }
+    .set { margin-top: 40px; }
+    .set h2 { font-family: var(--font-display); font-weight: 400; font-size: 24px; margin: 0 0 4px; }
+    .set .meta { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage-text); margin: 0 0 14px; }
+    .sizes { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
+    @media (min-width: 900px) { .sizes { grid-template-columns: 1200fr 1080fr 1080fr; } }
+    .fit { position: relative; width: 100%; overflow: hidden; border-radius: 8px; box-shadow: 0 24px 50px -30px rgba(0,0,0,.8); }
+    .fit .board { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+    .fit .lbl { position: absolute; left: 10px; bottom: 8px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: rgba(245,241,232,.7); background: rgba(0,0,0,.35); padding: 3px 7px; border-radius: 999px; }
+  </style>
+</head>
+<body>
+  <script>
+    /* ---- board definitions: markup per subject/style, sized by class ---- */
+    var BOARDS = {
+      "seven-a": { name: "Seven days — forest", html: function () { return '\
+        <div class="glow a"></div><div class="glow b"></div>\
+        <div class="row"><div class="brand-sm">Oriya<i>.</i></div><div class="kick">Free · 7 mornings</div></div>\
+        <div>\
+          <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\
+          <h1 class="big">Seven days to <em>remember.</em></h1>\
+          <p class="sub">One short email each morning. The Stop Battling guide, right away.</p>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">stop battling. start remembering.</div></div>'; } },
+      "seven-b": { name: "Seven days — cream", html: function () { return '\
+        <div class="edge"></div>\
+        <div class="board-in" style="display:flex;flex-direction:column;justify-content:space-between;height:100%">\
+        <div class="row"><div class="brand-sm">Oriya<i>.</i></div><div class="kick">Free · 7 mornings</div></div>\
+        <div>\
+          <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\
+          <h1 class="big">Seven days to <span class="w under">remember<svg viewBox="0 0 100 6" preserveAspectRatio="none"><path d="M0 4 C 30 1.5, 60 6, 100 3"/></svg></span>.</h1>\
+          <p class="sub">One short email each morning. The Stop Battling guide, right away.</p>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">stop battling. start remembering.</div></div>\
+        </div>'; } },
+      "seven-c": { name: "Seven days — clay", html: function () { return '\
+        <div class="glow a"></div>\
+        <div class="row"><div class="brand-sm">Oriya<i style="color:var(--gold)">.</i></div><div class="kick">Free · 7 mornings</div></div>\
+        <div>\
+          <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\
+          <h1 class="big">Seven mornings. <em>One email each.</em></h1>\
+          <p class="sub">You’re not stuck. You’re writing a redemption story. Start here.</p>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">stop battling. start remembering.</div></div>'; } },
+      "school-a": { name: "The school — ember", html: function () { return '\
+        <div class="glow b"></div>\
+        <div class="row"><div class="brand-sm">Oriya<i>.</i></div><div class="kick">The school</div></div>\
+        <div>\
+          <h1 class="big"><span class="l1">stop <span class="w strike">battling<svg viewBox="0 0 100 6" preserveAspectRatio="none"><path d="M0 3.5 C 25 2, 50 5, 100 2.5"/></svg></span>.</span><span class="l2">start <em>remembering.</em></span></h1>\
+          <p class="sub">A small room for the ones who want to do the work. Together, with no temple.</p>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">very high priest · no temple</div></div>'; } },
+      "school-b": { name: "The school — cream", html: function () { return '\
+        <div class="row"><div class="brand-sm">Oriya<i>.</i></div><div class="kick">The school</div></div>\
+        <div>\
+          <div class="rule"></div>\
+          <h1 class="big">Start remembering<span class="dot">.</span></h1>\
+          <p class="sub">The videos are where you stop battling. This is where you start remembering.</p>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">very high priest · no temple</div></div>'; } },
+      "school-c": { name: "The school — portrait", html: function () { return '\
+        <div class="glow a"></div><div class="glow b"></div>\
+        <div class="row"><div class="brand-sm">Oriya<i>.</i></div><div class="kick">The school</div></div>\
+        <div class="who">\
+          <img class="portrait-b" src="assets/oriya-portrait.jpg" alt="" />\
+          <div>\
+            <h1 class="big">Start <em>remembering.</em></h1>\
+            <p class="sub">A small room for the ones who want to do the work.</p>\
+          </div>\
+        </div>\
+        <div class="row"><div class="url">stopbattling.com</div><div class="kick">stop battling. start remembering.</div></div>'; } }
+    };
+    var SIZES = { "1200x630": "wide", "1080x1080": "square", "1080x1920": "story" };
+
+    function boardEl(id, size) {
+      var wh = size.split("x");
+      var el = document.createElement("div");
+      el.className = "board " + SIZES[size] + " b-" + id;
+      el.style.setProperty("--w", wh[0] + "px");
+      el.style.setProperty("--h", wh[1] + "px");
+      el.innerHTML = BOARDS[id].html();
+      return el;
+    }
+
+    var q = new URLSearchParams(location.search);
+    if (q.get("b") && q.get("s") && BOARDS[q.get("b")] && SIZES[q.get("s")]) {
+      document.body.className = "single";
+      document.body.appendChild(boardEl(q.get("b"), q.get("s")));
+    } else {
+      var g = document.createElement("div");
+      g.className = "gallery";
+      g.innerHTML = '<h1>Banners</h1><p>Two subjects, three looks, three formats. Same palette and fonts as the site. PNG exports are in <a href="review.html#banners">the review page</a>; this page renders them live, so any word can change in seconds.</p>';
+      Object.keys(BOARDS).forEach(function (id) {
+        var set = document.createElement("div");
+        set.className = "set";
+        set.innerHTML = '<h2>' + BOARDS[id].name + '</h2><p class="meta">' + id + ' · 1200×630 · 1080×1080 · 1080×1920</p>';
+        var sizes = document.createElement("div");
+        sizes.className = "sizes";
+        Object.keys(SIZES).forEach(function (s) {
+          var wh = s.split("x").map(Number);
+          var fit = document.createElement("a");
+          fit.className = "fit"; fit.href = "banners.html?b=" + id + "&s=" + s; fit.target = "_blank";
+          fit.style.aspectRatio = wh[0] + " / " + wh[1];
+          var b = boardEl(id, s);
+          fit.appendChild(b);
+          var lbl = document.createElement("span"); lbl.className = "lbl"; lbl.textContent = s; fit.appendChild(lbl);
+          sizes.appendChild(fit);
+          function scale() { b.style.transform = "scale(" + (fit.clientWidth / wh[0]) + ")"; }
+          window.addEventListener("resize", scale); requestAnimationFrame(scale);
+        });
+        set.appendChild(sizes);
+        g.appendChild(set);
+      });
+      document.body.appendChild(g);
+    }
+  </script>
+</body>
+</html>

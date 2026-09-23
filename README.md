@@ -2,11 +2,15 @@
 
 Same words, same links, same prices, same palette and fonts. Only the presentation changed.
 
+**Start here → [review.html](https://soul-sam.github.io/stopbattling-redesign/review.html)** — three home versions, the six copy changes with reasons, and 18 banners.
+
 ## What's inside
 
 - `index.html` — the home page
 - `long.html` — "The long version"
 - `styles.css`, `script.js` — no frameworks, no dependencies (Google Fonts only)
+- `home-v2.html` — six copy suggestions applied · `home-v3.html` — the funnel (01 stop battling → 02 start remembering)
+- `review.html` — the hub for Oriya · `banners.html` — live banner renderer · `banners/` — 18 PNG exports
 - `assets/` — the two photos and the OG image, copied from the live site
 
 ## What changed (visually)
