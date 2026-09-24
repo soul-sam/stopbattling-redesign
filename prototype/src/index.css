@@ -1,0 +1,143 @@
+@import 'tailwindcss';
+
+/* Two tones. Paper for the Room, Remembership and the journal; night for the Radio.
+   Components only speak in roles (bg, fg, soft, hush, line, card, accent), so they work in both. */
+:root {
+  --c-bg: #f1ede5;
+  --c-card: #f8f5ef;
+  --c-fg: #23221d;
+  --c-soft: #55523f;
+  --c-hush: #8a8472;
+  --c-line: #dad3c3;
+  --c-accent: #b27d22; /* ember, from the stopbattling palette */
+  --c-moss: #4b5a3f;
+  --c-wash: #e7e2d6;
+}
+.tone-night {
+  --c-bg: #191815;
+  --c-card: #221f1b;
+  --c-fg: #ebe5d8;
+  --c-soft: #bdb5a3;
+  --c-hush: #847d6d;
+  --c-line: #37332c;
+  --c-accent: #d9a441;
+  --c-moss: #8fa27c;
+  --c-wash: #26231e;
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-card: var(--c-card);
+  --color-fg: var(--c-fg);
+  --color-soft: var(--c-soft);
+  --color-hush: var(--c-hush);
+  --color-line: var(--c-line);
+  --color-accent: var(--c-accent);
+  --color-moss: var(--c-moss);
+  --color-wash: var(--c-wash);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.night {
+  background: #191815;
+}
+
+/* paper grain, barely there */
+.grain::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 50;
+  letter-spacing: -0.015em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* timeline */
+input[type='range'].timeline {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+}
+input[type='range'].timeline::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--c-fg) var(--p, 0%), var(--c-line) var(--p, 0%));
+  border-radius: 2px;
+}
+input[type='range'].timeline::-moz-range-track {
+  height: 2px;
+  background: var(--c-line);
+}
+input[type='range'].timeline::-moz-range-progress {
+  height: 2px;
+  background: var(--c-fg);
+}
+input[type='range'].timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border-radius: 99px;
+  background: var(--c-fg);
+  border: 0;
+}
+input[type='range'].timeline::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 99px;
+  background: var(--c-fg);
+  border: 0;
+}
+
+/* the one breathing thing: sit timer + radio button halo */
+@keyframes breathe {
+  0%, 100% { transform: scale(0.82); opacity: 0.55; }
+  50% { transform: scale(1); opacity: 1; }
+}
+.breathe { animation: breathe 11s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.arrive { animation: arrive 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+.fade { animation: fade 0.35s ease both; }
+.fade-slow { animation: fade 2.4s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .breathe, .arrive, .fade, .fade-slow { animation: none; }
+}
+
+textarea { field-sizing: content; }

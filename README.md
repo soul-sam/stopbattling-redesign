@@ -28,3 +28,17 @@ Same words, same links, same prices, same palette and fonts. Only the presentati
 
 1. The email form (`#seven-days-form`) has `action="#"`. Point it at the same handler the current site uses — field names (`email`, honeypot `website`) are unchanged.
 2. Internal links use `index.html` / `long.html`. Swap for `/` and `/long`.
+
+## Remembership — product prototypes
+
+**→ [soul-sam.github.io/stopbattling-redesign/remembership/](https://soul-sam.github.io/stopbattling-redesign/remembership/)**
+
+Three concepts for a calmer, Telegram-simple space around Oriya's work. Switch with the small dot, bottom-left. Press `` ` `` for the prototype notes (hypothesis, strength, risk).
+
+- `#/room` — The Room: one thing the community is sitting with today, reflections as notes on a table, Thursday's open room
+- `#/radio` — The Radio: one button, the archive picks something for you, "what came up?"
+- `#/remembership` — Remembership: seven days, one audio / question / practice / conversation each; the framework shows up only at the end
+
+Shared: private journal (with the mocked "you wrote about something similar three months ago"), other rooms, live-gathering mock, tiny support modal, "Close the app. Go live your life."
+
+Source in `prototype/` (React + TypeScript + Tailwind, local state + localStorage, silent mock audio). `cd prototype && npm i && npm run dev`. The Pages workflow builds it into `/remembership/`.

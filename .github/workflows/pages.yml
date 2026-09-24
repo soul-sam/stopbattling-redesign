@@ -21,8 +21,20 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: prototype/package-lock.json
+      # static site as-is, plus the Remembership prototype built into /remembership/
+      - name: Build site
+        run: |
+          mkdir -p _site
+          rsync -a --exclude '.git' --exclude '.github' --exclude 'prototype' --exclude '_site' --exclude '*.zip' ./ _site/
+          cd prototype && npm ci && npm run build
+          cp -r dist ../_site/remembership
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
